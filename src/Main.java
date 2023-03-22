@@ -1,17 +1,19 @@
 import controlmanagement.TurnHandler;
 import deskmanagement.SideColor;
 import exceptions.IllegalTurnException;
+import exceptions.WrongTurnException;
 import graphic.TableBuilder;
 
 public class Main {
     public static void main(String[] args) {
         TableBuilder builder = new TableBuilder();
-        builder.drawBoard();
         SideColor sideTurn = SideColor.WHITE;
+        builder.drawBoard();
         while (true) {
+            System.out.print("Enter turn(first coordinate & second coordinate): ");
             try {
                 TurnHandler.process(sideTurn);
-            } catch (IllegalTurnException e) {
+            } catch (IllegalTurnException | WrongTurnException e) {
                 System.out.println(e.getMessage());
                 continue;
             }
@@ -20,6 +22,7 @@ public class Main {
             } else {
                 sideTurn = SideColor.WHITE;
             }
+            System.out.println();
             builder.drawBoard();
         }
     }

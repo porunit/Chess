@@ -4,10 +4,11 @@ import deskmanagement.SideColor;
 import deskmanagement.Table;
 import exceptions.IllegalTurnException;
 import exceptions.WrongTurnException;
+import figures.Chessman;
 import io.Position;
 
 public class TurnHandler {
-    public static void process(SideColor turnColor) throws IllegalTurnException {
+    public static void process(SideColor turnColor) throws IllegalTurnException, WrongTurnException {
         Position position = null;
         try {
             position = InputHandler.inputTurn();
@@ -15,10 +16,14 @@ public class TurnHandler {
             System.out.println(e.getMessage());
         }
         assert position != null;
-        if (Table.getChessman(position.getStartX(), position.getStartY()).getSide() != turnColor) {
+        Chessman figure = Table.getChessman(position.getStartX(), position.getStartY());
+        if (figure == null) {
+            throw new WrongTurnException("Empty cell");
+        }
+        if (figure.getSide() != turnColor) {
             throw new IllegalTurnException("Now turn " + turnColor.toString());
         }
-        Table.moveTo(position.getStartX(), position.getStartY(), position.getEND_X(), position.getEND_Y());
+        Table.moveTo(figure, position.getEND_X(), position.getEND_Y());
     }
 
 }

@@ -6,7 +6,8 @@ import deskmanagement.SideColor;
  * Пешка
  */
 public class Pawn extends Chessman {
-    public Pawn(SideColor color) {
+    public Pawn(SideColor color, int x1, int y1) {
+        super(x1, y1);
         side = color;
         if (side == SideColor.WHITE) {
             SIGN = '♟';

@@ -7,7 +7,8 @@ import deskmanagement.SideColor;
  */
 public class Rook extends Chessman {
 
-    public Rook(SideColor color) {
+    public Rook(SideColor color, int x1, int y1) {
+        super(x1, y1);
         side = color;
         if (side == SideColor.WHITE) {
             SIGN = '♜';
