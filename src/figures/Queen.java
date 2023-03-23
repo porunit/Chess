@@ -22,14 +22,18 @@ public class Queen extends Chessman {
         int deltaY = endY - y;
 
         if (Math.abs(deltaX) == Math.abs(deltaY)) {
+            if (Table.getField(endX, endY) != null && Table.getField(endX, endY).getSide() == this.side) {
+                return false;
+            }
+
             int xDir = deltaX > 0 ? 1 : -1;
             int yDir = deltaY > 0 ? 1 : -1;
 
-            for (int i = 1; i < Math.abs(deltaX); i++) {
+            for (int i = 1; i <= Math.abs(deltaX); i++) {
                 int currX = x + i * xDir;
                 int currY = y + i * yDir;
 
-                if (Table.getField(currX, currY) != null && Table.getField(currX, currY).getSide() == this.side) {
+                if (Table.getField(currX, currY) != null) {
                     return false;
                 }
             }
