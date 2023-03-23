@@ -3,9 +3,6 @@ package figures;
 import deskmanagement.SideColor;
 import deskmanagement.Table;
 
-/**
- * Пешка
- */
 public class Pawn extends Chessman {
     public Pawn(SideColor color, int y1, int x1) {
         super(y1, x1);

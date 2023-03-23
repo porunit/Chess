@@ -3,9 +3,6 @@ package figures;
 import deskmanagement.SideColor;
 import deskmanagement.Table;
 
-/**
- * Ладья <bald>|</bald>
- */
 public class Rook extends Chessman {
 
     public Rook(SideColor color, int y1, int x1) {

@@ -3,9 +3,6 @@ package figures;
 import deskmanagement.SideColor;
 import deskmanagement.Table;
 
-/**
- * Конь
- */
 public class Knight extends Chessman {
 
     public Knight(SideColor color, int y1, int x1) {

@@ -4,8 +4,12 @@ import figures.*;
 
 public class Table {
     private static final Chessman[][] board = new Chessman[8][8];
+    private static final King whiteKing;
+    private static final King blackKing;
 
     static {
+        whiteKing = new King(SideColor.WHITE, 0, 4);
+        blackKing = new King(SideColor.BLACK, 7, 4);
         board[0][0] = new Rook(SideColor.WHITE, 0, 0);
         board[0][7] = new Rook(SideColor.WHITE, 0, 7);
         board[7][7] = new Rook(SideColor.BLACK, 7, 7);
@@ -29,8 +33,8 @@ public class Table {
         board[7][3] = new Queen(SideColor.BLACK, 7, 3);
         board[0][3] = new Queen(SideColor.WHITE, 0, 3);
 
-        board[0][4] = new King(SideColor.WHITE, 0, 4);
-        board[7][4] = new King(SideColor.BLACK, 7, 4);
+        board[0][4] = whiteKing;
+        board[7][4] = blackKing;
     }
 
 
@@ -43,5 +47,9 @@ public class Table {
         board[chessman.getY()][chessman.getX()] = null;
         chessman.setY(endY);
         chessman.setX(endX);
+    }
+
+    public static King getKing(SideColor color) {
+        return color == SideColor.WHITE ? whiteKing : blackKing;
     }
 }

@@ -3,9 +3,6 @@ package figures;
 import deskmanagement.SideColor;
 import deskmanagement.Table;
 
-/**
- * Слон
- */
 public class Bishop extends Chessman {
 
     public Bishop(SideColor color, int y1, int x1) {

@@ -49,4 +49,5 @@ public abstract class Chessman {
 
 
     public abstract boolean isDirectionPossible(int endY, int endX);
+
 }

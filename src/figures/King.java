@@ -3,9 +3,6 @@ package figures;
 import deskmanagement.SideColor;
 import deskmanagement.Table;
 
-/**
- * Король
- */
 public class King extends Chessman {
     public King(SideColor color, int y1, int x1) {
         super(y1, x1);
@@ -35,7 +32,7 @@ public class King extends Chessman {
         return !isUnderAttack(endY, endX);
     }
 
-    private boolean isUnderAttack(int endY, int endX) {
+    public boolean isUnderAttack(int endY, int endX) {
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {

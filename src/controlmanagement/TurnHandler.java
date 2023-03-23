@@ -5,9 +5,13 @@ import deskmanagement.Table;
 import exceptions.IllegalTurnException;
 import exceptions.WrongTurnException;
 import figures.Chessman;
+import figures.King;
 import io.Position;
 
 public class TurnHandler {
+    private static final King whiteKing = Table.getKing(SideColor.WHITE);
+    private static final King blackKing = Table.getKing(SideColor.BLACK);
+
     public static void process(SideColor turnColor) throws IllegalTurnException, WrongTurnException {
         Position position = null;
         try {
@@ -26,15 +30,20 @@ public class TurnHandler {
         if (!isValidTurn(figure, position)) {
             throw new IllegalTurnException(figure.getName() + " cant move in that way");
         }
-        Table.moveTo(figure, position.getEND_X(), position.getEND_Y());
+        Table.moveTo(figure, position.getEndX(), position.getEndY());
+        if (whiteKing.isUnderAttack(whiteKing.getY(), whiteKing.getX()) && turnColor == SideColor.WHITE ||
+                blackKing.isUnderAttack(blackKing.getY(), blackKing.getX()) && turnColor == SideColor.BLACK) {
+            Table.moveTo(figure, position.getStartX(), position.getStartY());
+            throw new IllegalTurnException(turnColor + " King under shah");
+        }
     }
 
     private static boolean isValidTurn(Chessman figure, Position position) {
-        Chessman endField = Table.getField(position.getEND_X(), position.getEND_Y());
+        Chessman endField = Table.getField(position.getEndX(), position.getEndY());
 
         if (endField != null && endField.getSide() == figure.getSide()) {
             return false;
         }
-        return figure.isDirectionPossible(position.getEND_Y(), position.getEND_X());
+        return figure.isDirectionPossible(position.getEndY(), position.getEndX());
     }
 }

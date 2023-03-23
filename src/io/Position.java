@@ -26,11 +26,11 @@ public class Position {
         return START_Y;
     }
 
-    public int getEND_X() {
+    public int getEndX() {
         return END_X;
     }
 
-    public int getEND_Y() {
+    public int getEndY() {
         return END_Y;
     }
 
