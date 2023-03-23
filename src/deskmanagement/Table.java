@@ -34,7 +34,7 @@ public class Table {
     }
 
 
-    public static Chessman getChessman(int x, int y) {
+    public static Chessman getField(int x, int y) {
         return board[y][x];
     }
 

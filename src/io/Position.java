@@ -9,7 +9,7 @@ public class Position {
     private final int END_Y;
 
     public Position(int startX, int startY, int endX, int endY) throws WrongTurnException {
-        if (isCorrect(startX) || isCorrect(startY) || isCorrect(endX) || isCorrect(endY)) {
+        if (isCorrectX(startX) || isCorrectY(startY) || isCorrectX(endX) || isCorrectY(endY)) {
             throw new WrongTurnException("Wrong turn format");
         }
         this.START_X = startX;
@@ -34,7 +34,11 @@ public class Position {
         return END_Y;
     }
 
-    private boolean isCorrect(int coordinate) {
+    private boolean isCorrectX(int coordinate) {
         return (coordinate < 0 || coordinate > 8);
+    }
+
+    private boolean isCorrectY(int coordinate) {
+        return (coordinate < 0 || coordinate >= 8);
     }
 }
