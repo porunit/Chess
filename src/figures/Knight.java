@@ -1,7 +1,12 @@
 package figures;
 
-import deskmanagement.SideColor;
-import deskmanagement.Table;
+import exceptions.WrongTurnException;
+import management.control.Position;
+import management.desk.SideColor;
+import management.desk.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Knight extends Chessman {
 
@@ -26,5 +31,22 @@ public class Knight extends Chessman {
             return Table.getField(endX, endY) == null || Table.getField(endX, endY).getSide() != this.side;
         }
         return false;
+    }
+
+    @Override
+    public List<Position> getPossiblePositions() throws WrongTurnException {
+        List<Position> possiblePositions = new ArrayList<>();
+        int[] dx = {2, 2, -2, -2, 1, 1, -1, -1};
+        int[] dy = {1, -1, 1, -1, 2, -2, 2, -2};
+
+        for (int i = 0; i < dx.length; i++) {
+            int newX = x + dx[i];
+            int newY = y + dy[i];
+
+            if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8 && (Table.getField(newX, newY) == null || Table.getField(newX, newY).getSide() != side)) {
+                possiblePositions.add(new Position(x, y, newX, newY));
+            }
+        }
+        return possiblePositions;
     }
 }

@@ -1,6 +1,9 @@
-package deskmanagement;
+package management.desk;
 
 import figures.*;
+import management.control.FigureToSwap;
+
+import java.util.ArrayList;
 
 public class Table {
     private static final Chessman[][] board = new Chessman[8][8];
@@ -52,4 +55,38 @@ public class Table {
     public static King getKing(SideColor color) {
         return color == SideColor.WHITE ? whiteKing : blackKing;
     }
+
+    public static void pawnEvolve(Pawn pawn, FigureToSwap figureType) {
+        switch (figureType) {
+            case QUEEN -> board[pawn.getY()][pawn.getX()] = new Queen(pawn.getSide(), pawn.getY(), pawn.getX());
+            case ROOK -> board[pawn.getY()][pawn.getX()] = new Rook(pawn.getSide(), pawn.getY(), pawn.getX());
+            case BISHOP -> board[pawn.getY()][pawn.getX()] = new Bishop(pawn.getSide(), pawn.getY(), pawn.getX());
+            case KNIGHT -> board[pawn.getY()][pawn.getX()] = new Knight(pawn.getSide(), pawn.getY(), pawn.getX());
+        }
+    }
+
+    public static ArrayList<Chessman> getChessmans(SideColor side) {
+        ArrayList<Chessman> figures = new ArrayList<>();
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Chessman Chessman = Table.getField(i, j);
+
+                if (Chessman != null && Chessman.getSide() == side) {
+                    figures.add(Chessman);
+                }
+            }
+        }
+
+        return figures;
+    }
+
+    public static void setField(int x, int y, Chessman piece) {
+        board[y][x] = piece;
+    }
+
+    public static boolean isValidField(int i, int j) {
+        return i >= 0 && i < 8 && j >= 0 && j < 8;
+    }
+
 }

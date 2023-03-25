@@ -1,6 +1,10 @@
 package figures;
 
-import deskmanagement.SideColor;
+import exceptions.WrongTurnException;
+import management.control.Position;
+import management.desk.SideColor;
+
+import java.util.List;
 
 public abstract class Chessman {
     String name;
@@ -50,4 +54,5 @@ public abstract class Chessman {
 
     public abstract boolean isDirectionPossible(int endY, int endX);
 
+    public abstract List<Position> getPossiblePositions() throws WrongTurnException;
 }

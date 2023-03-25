@@ -1,7 +1,12 @@
 package figures;
 
-import deskmanagement.SideColor;
-import deskmanagement.Table;
+import exceptions.WrongTurnException;
+import management.control.Position;
+import management.desk.SideColor;
+import management.desk.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Queen extends Chessman {
     public Queen(SideColor color, int y1, int x1) {
@@ -22,14 +27,14 @@ public class Queen extends Chessman {
         int deltaY = endY - y;
 
         if (Math.abs(deltaX) == Math.abs(deltaY)) {
-            if (Table.getField(endX, endY) != null && Table.getField(endX, endY).getSide() == this.side) {
+            if (Table.getField(endX, endY) != null && Table.getField(endX, endY).getSide() == side) {
                 return false;
             }
 
             int xDir = deltaX > 0 ? 1 : -1;
             int yDir = deltaY > 0 ? 1 : -1;
 
-            for (int i = 1; i <= Math.abs(deltaX); i++) {
+            for (int i = 1; i < Math.abs(deltaX); i++) {
                 int currX = x + i * xDir;
                 int currY = y + i * yDir;
 
@@ -39,8 +44,8 @@ public class Queen extends Chessman {
             }
             return true;
         } else if (deltaX == 0 || deltaY == 0) {
-            int currX = this.getX();
-            int currY = this.getY();
+            int currX = x;
+            int currY = y;
 
             if (endX != currX && endY != currY) {
                 return false;
@@ -69,5 +74,44 @@ public class Queen extends Chessman {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public List<Position> getPossiblePositions() throws WrongTurnException {
+        List<Position> positions = new ArrayList<>();
+
+        // Check all possible positions in diagonal directions
+        for (int i = 1; i <= 7; i++) {
+            if (x + i <= 7 && y + i <= 7 && isDirectionPossible(y + i, x + i)) {
+                positions.add(new Position(x, y, x + i, y + i));
+            }
+            if (x + i <= 7 && y - i >= 0 && isDirectionPossible(y - i, x + i)) {
+                positions.add(new Position(x, y, x + i, y - i));
+            }
+            if (x - i >= 0 && y + i <= 7 && isDirectionPossible(y + i, x - i)) {
+                positions.add(new Position(x, y, x - i, y + i));
+            }
+            if (x - i >= 0 && y - i >= 0 && isDirectionPossible(y - i, x - i)) {
+                positions.add(new Position(x, y, x - i, y - i));
+            }
+        }
+
+        // Check all possible positions in horizontal and vertical directions
+        for (int i = 1; i <= 7; i++) {
+            if (x + i <= 7 && isDirectionPossible(y, x + i)) {
+                positions.add(new Position(x, y, x + i, y));
+            }
+            if (x - i >= 0 && isDirectionPossible(y, x - i)) {
+                positions.add(new Position(x, y, x - i, y));
+            }
+            if (y + i <= 7 && isDirectionPossible(y + i, x)) {
+                positions.add(new Position(x, y, x, y + i));
+            }
+            if (y - i >= 0 && isDirectionPossible(y - i, x)) {
+                positions.add(new Position(x, y, x, y - i));
+            }
+        }
+
+        return positions;
     }
 }

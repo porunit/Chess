@@ -1,7 +1,11 @@
 package figures;
 
-import deskmanagement.SideColor;
-import deskmanagement.Table;
+import exceptions.WrongTurnException;
+import management.control.Position;
+import management.desk.SideColor;
+import management.desk.Table;
+
+import java.util.ArrayList;
 
 public class Rook extends Chessman {
 
@@ -53,4 +57,20 @@ public class Rook extends Chessman {
         return true;
     }
 
+    @Override
+    public ArrayList<Position> getPossiblePositions() throws WrongTurnException {
+        ArrayList<Position> possiblePositions = new ArrayList<>();
+
+        for (int i = x - 1; i <= x + 1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {
+                if (i >= 0 && i < 8 && j >= 0 && j < 8 && (i != x || j != y)) {
+                    if (Table.getField(i, j) == null || Table.getField(i, j).getSide() != this.side) {
+                        possiblePositions.add(new Position(x, y, i, j));
+                    }
+                }
+            }
+        }
+
+        return possiblePositions;
+    }
 }

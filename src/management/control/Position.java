@@ -1,4 +1,4 @@
-package io;
+package management.control;
 
 import exceptions.WrongTurnException;
 

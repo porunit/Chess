@@ -1,7 +1,7 @@
 package graphic;
 
-import deskmanagement.Table;
 import figures.Chessman;
+import management.desk.Table;
 
 public class TableBuilder {
 

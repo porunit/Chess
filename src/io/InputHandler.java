@@ -1,7 +1,8 @@
-package controlmanagement;
+package io;
 
 import exceptions.WrongTurnException;
-import io.Position;
+import management.control.FigureToSwap;
+import management.control.Position;
 
 import java.util.Scanner;
 
@@ -34,6 +35,17 @@ public class InputHandler {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    public static FigureToSwap inputFigure() throws WrongTurnException {
+        var figureType = scanner.next().toUpperCase();
+        FigureToSwap figureToSwap;
+        try {
+            figureToSwap = FigureToSwap.valueOf(figureType);
+        } catch (IllegalArgumentException e) {
+            throw new WrongTurnException("No such figure");
+        }
+        return figureToSwap;
     }
 
     private static int convertToPosition(char letter) {

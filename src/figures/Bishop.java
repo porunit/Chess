@@ -1,7 +1,12 @@
 package figures;
 
-import deskmanagement.SideColor;
-import deskmanagement.Table;
+import exceptions.WrongTurnException;
+import management.control.Position;
+import management.desk.SideColor;
+import management.desk.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bishop extends Chessman {
 
@@ -28,16 +33,38 @@ public class Bishop extends Chessman {
         int xDir = deltaX > 0 ? 1 : -1;
         int yDir = deltaY > 0 ? 1 : -1;
 
-        for (int i = 1; i <= Math.abs(deltaX); i++) {
+        for (int i = 1; i < Math.abs(deltaX); i++) {
             int currX = x + i * xDir;
             int currY = y + i * yDir;
 
-            if (Table.getField(currX, currY) != null && Table.getField(currX, currY).getSide() == this.side) {
+            if (Table.getField(currX, currY) != null) {
                 return false;
             }
         }
         return true;
     }
 
+    @Override
+    public List<Position> getPossiblePositions() throws WrongTurnException {
+        List<Position> possiblePositions = new ArrayList<>();
+
+        for (int destX = 0; destX < 8; destX++) {
+            int destY = destX;
+
+            if (isDirectionPossible(destY, destX)) {
+                Position position = new Position(x, y, destX, destY);
+                possiblePositions.add(position);
+            }
+
+            destY = 8 - destX - 1;
+
+            if (isDirectionPossible(destY, destX)) {
+                Position position = new Position(x, y, destX, destY);
+                possiblePositions.add(position);
+            }
+        }
+
+        return possiblePositions;
+    }
 }
 

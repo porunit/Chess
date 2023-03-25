@@ -1,4 +1,4 @@
-package deskmanagement;
+package management.desk;
 
 public enum SideColor {
     WHITE,

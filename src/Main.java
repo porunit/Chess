@@ -1,8 +1,8 @@
-import controlmanagement.TurnHandler;
-import deskmanagement.SideColor;
 import exceptions.IllegalTurnException;
 import exceptions.WrongTurnException;
 import graphic.TableBuilder;
+import management.control.TurnHandler;
+import management.desk.SideColor;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,6 +24,14 @@ public class Main {
             }
             System.out.println();
             builder.drawBoard();
+            try {
+                if (TurnHandler.isMate()) {
+                    System.out.print(sideTurn + " Win");
+                    break;
+                }
+            } catch (WrongTurnException e) {
+                System.out.print(e.getMessage());
+            }
         }
     }
 }
