@@ -1,7 +1,7 @@
 package management.desk;
 
 import figures.*;
-import management.control.FigureToSwap;
+import management.control.FigureToEvolve;
 
 import java.util.ArrayList;
 
@@ -48,15 +48,14 @@ public class Table {
     public static void moveTo(Chessman chessman, int endX, int endY) {
         board[endY][endX] = chessman;
         board[chessman.getY()][chessman.getX()] = null;
-        chessman.setY(endY);
-        chessman.setX(endX);
+        chessman.setCoordinates(endY, endX);
     }
 
     public static King getKing(SideColor color) {
         return color == SideColor.WHITE ? whiteKing : blackKing;
     }
 
-    public static void pawnEvolve(Pawn pawn, FigureToSwap figureType) {
+    public static void pawnEvolve(Pawn pawn, FigureToEvolve figureType) {
         switch (figureType) {
             case QUEEN -> board[pawn.getY()][pawn.getX()] = new Queen(pawn.getSide(), pawn.getY(), pawn.getX());
             case ROOK -> board[pawn.getY()][pawn.getX()] = new Rook(pawn.getSide(), pawn.getY(), pawn.getX());
@@ -83,6 +82,21 @@ public class Table {
 
     public static void setField(int x, int y, Chessman piece) {
         board[y][x] = piece;
+    }
+
+    public static boolean isFieldOccupied(SideColor side, int x, int y) {
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Chessman piece = Table.getField(i, j);
+                if (piece != null && piece.getSide() != side) {
+                    if (piece.isDirectionPossible(y, x)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public static boolean isValidField(int i, int j) {

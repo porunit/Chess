@@ -8,6 +8,7 @@ import management.desk.Table;
 import java.util.ArrayList;
 
 public class Rook extends Chessman {
+    boolean isMoved = false;
 
     public Rook(SideColor color, int y1, int x1) {
         super(y1, x1);
@@ -23,6 +24,7 @@ public class Rook extends Chessman {
     @Override
     public void setCoordinates(int y, int x) {
         super.setCoordinates(y, x);
+        this.isMoved = true;
     }
 
 
@@ -72,5 +74,13 @@ public class Rook extends Chessman {
         }
 
         return possiblePositions;
+    }
+
+    public boolean isMoved() {
+        return isMoved;
+    }
+
+    public void setHasMoved() {
+        isMoved = true;
     }
 }

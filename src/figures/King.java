@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Chessman {
+    private boolean isMoved = false;
+    private boolean isChecked = false;
+
     public King(SideColor color, int y1, int x1) {
         super(y1, x1);
         side = color;
@@ -22,6 +25,7 @@ public class King extends Chessman {
 
     @Override
     public boolean isDirectionPossible(int endY, int endX) {
+
         int currX = x;
         int currY = y;
 
@@ -40,6 +44,7 @@ public class King extends Chessman {
                 Chessman piece = Table.getField(i, j);
                 if (piece != null && piece.getSide() != this.side) {
                     if (piece.isDirectionPossible(y, x)) {
+                        isChecked = true;
                         return true;
                     }
                 }
@@ -67,4 +72,21 @@ public class King extends Chessman {
         return possiblePositions;
     }
 
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public boolean isMoved() {
+        return isMoved;
+    }
+
+    @Override
+    public void setCoordinates(int y, int x) {
+        super.setCoordinates(y, x);
+        isMoved = true;
+    }
+
+    public void setHasMoved() {
+        this.isMoved = true;
+    }
 }

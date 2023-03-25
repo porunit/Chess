@@ -1,7 +1,7 @@
 package io;
 
 import exceptions.WrongTurnException;
-import management.control.FigureToSwap;
+import management.control.FigureToEvolve;
 import management.control.Position;
 
 import java.util.Scanner;
@@ -37,15 +37,15 @@ public class InputHandler {
         }
     }
 
-    public static FigureToSwap inputFigure() throws WrongTurnException {
+    public static FigureToEvolve inputFigure() throws WrongTurnException {
         var figureType = scanner.next().toUpperCase();
-        FigureToSwap figureToSwap;
+        FigureToEvolve figureToEvolve;
         try {
-            figureToSwap = FigureToSwap.valueOf(figureType);
+            figureToEvolve = FigureToEvolve.valueOf(figureType);
         } catch (IllegalArgumentException e) {
             throw new WrongTurnException("No such figure");
         }
-        return figureToSwap;
+        return figureToEvolve;
     }
 
     private static int convertToPosition(char letter) {

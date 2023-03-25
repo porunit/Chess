@@ -1,6 +1,6 @@
 package management.control;
 
-public enum FigureToSwap {
+public enum FigureToEvolve {
     ROOK,
     KNIGHT,
     QUEEN,
