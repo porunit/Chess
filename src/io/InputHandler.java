@@ -10,7 +10,7 @@ public class InputHandler {
     private static final Scanner scanner = new Scanner(System.in);
     private static final char START_LETTER = 'a';
 
-    public static Position inputTurn() throws WrongTurnException {
+    public static Position inputTurn() {
         while (true) {
             try {
                 String turn = scanner.nextLine();

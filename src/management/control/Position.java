@@ -2,7 +2,9 @@ package management.control;
 
 import exceptions.WrongTurnException;
 
-public class Position {
+import java.io.Serializable;
+
+public class Position implements Serializable {
     private final int START_X;
     private final int START_Y;
     private final int END_X;

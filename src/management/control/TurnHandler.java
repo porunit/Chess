@@ -18,13 +18,7 @@ public class TurnHandler {
     private static final King blackKing = Table.getKing(SideColor.BLACK);
     private static boolean wasCastle = false;
 
-    public static void process(SideColor turnColor) throws IllegalTurnException, WrongTurnException {
-        Position position = null;
-        try {
-            position = InputHandler.inputTurn();
-        } catch (WrongTurnException e) {
-            System.out.println(e.getMessage());
-        }
+    public static void process(SideColor turnColor, Position position) throws IllegalTurnException, WrongTurnException {
         assert position != null;
         Chessman figure = Table.getField(position.getStartX(), position.getStartY());
         if (figure == null) {
@@ -41,13 +35,11 @@ public class TurnHandler {
         } else if (!isValidTurn(figure, position)) {
             throw new IllegalTurnException(figure.getName() + " cant move in that way");
         }
-        if (Table.getField(position.getStartX(), position.getStartY()) != null) {
-            Table.moveTo(figure, position.getEndX(), position.getEndY());
-        }
+        Table.moveTo(figure, position.getEndX(), position.getEndY());
         if (whiteKing.isUnderAttack() && turnColor == SideColor.WHITE ||
                 blackKing.isUnderAttack() && turnColor == SideColor.BLACK) {
             Table.moveTo(figure, position.getStartX(), position.getStartY());
-            throw new IllegalTurnException(turnColor + " King under shah");
+            throw new IllegalTurnException(turnColor + " King under check");
         }
         try {
             pawnEvolve(figure);
@@ -147,7 +139,7 @@ public class TurnHandler {
         int end = Math.min(king.getX(), startX);
         for (int i = start + 1; i < end; i++) {
             if (Table.getField(i, king.getY()) != null) {
-                throw new IllegalTurnException("Can't castle: Pieces in the way" + Table.getField(i, king.getY()).getName());
+                throw new IllegalTurnException("Can't castle: " + Table.getField(i, king.getY()).getName() + " in the way ");
             }
         }
 

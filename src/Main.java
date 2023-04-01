@@ -1,8 +1,12 @@
 import exceptions.IllegalTurnException;
 import exceptions.WrongTurnException;
 import graphic.TableBuilder;
+import io.InputHandler;
+import management.control.Position;
 import management.control.TurnHandler;
 import management.desk.SideColor;
+
+import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,9 +14,12 @@ public class Main {
         SideColor sideTurn = SideColor.WHITE;
         builder.drawBoard();
         while (true) {
+            System.out.println();
             System.out.print("Enter turn(first coordinate & second coordinate): ");
+            Position position;
+            position = InputHandler.inputTurn();
             try {
-                TurnHandler.process(sideTurn);
+                TurnHandler.process(sideTurn, Objects.requireNonNull(position));
             } catch (IllegalTurnException | WrongTurnException e) {
                 System.out.println(e.getMessage());
                 continue;
