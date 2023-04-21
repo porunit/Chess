@@ -83,6 +83,7 @@ public class TurnHandler {
                     Table.setField(position.getStartX(), position.getStartY(), chessman);
                     chessman.setY(position.getStartY());
                     chessman.setX(position.getStartX());
+                    System.out.println(position.getStartX() + " " + position.getStartY() + " " + position.getEndX() + " " + position.getEndY());
                     return false;
                 }
                 Table.moveTo(chessman, position.getStartX(), position.getStartY());
