@@ -1,13 +1,11 @@
 package io;
 
-import management.desk.SideColor;
+import management.network.PayloadType;
 
 import java.io.Serializable;
 
 public record S2CPayload(
-        String message,
-        String board,
-        SideColor sideToSet
+        String data,
+        PayloadType type
 ) implements Serializable {
-
 }

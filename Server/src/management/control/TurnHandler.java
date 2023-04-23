@@ -6,10 +6,15 @@ import figures.Chessman;
 import figures.King;
 import figures.Pawn;
 import figures.Rook;
-import io.InputHandler;
+import io.C2SEvolvePayload;
+import io.S2CPayload;
 import management.desk.SideColor;
 import management.desk.Table;
+import management.network.PayloadType;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +22,8 @@ public class TurnHandler {
     private static final King whiteKing = Table.getKing(SideColor.WHITE);
     private static final King blackKing = Table.getKing(SideColor.BLACK);
     private static boolean wasCastle = false;
+    private static ObjectOutputStream output;
+    private static ObjectInputStream input;
 
     public static void process(SideColor turnColor, Position position) throws IllegalTurnException, WrongTurnException {
         assert position != null;
@@ -53,8 +60,18 @@ public class TurnHandler {
         if (!(figure instanceof Pawn && ((Pawn) figure).canEvolve())) {
             return;
         }
-        System.out.print("Enter figure to swap pawn on: ");
-        FigureToEvolve figureToEvolve = InputHandler.inputFigure();
+        try {
+            output.writeObject(new S2CPayload("Enter figure to swap pawn on: ", PayloadType.EVOLVE));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        C2SEvolvePayload evolvePayload;
+        try {
+            evolvePayload = (C2SEvolvePayload) input.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        FigureToEvolve figureToEvolve = evolvePayload.figure();
         Table.pawnEvolve((Pawn) figure, figureToEvolve);
     }
 
@@ -162,5 +179,10 @@ public class TurnHandler {
             return;
         }
         castle(king, position.getEndX(), position.getEndY());
+    }
+
+    public static void setStreams(ObjectOutputStream outputStream, ObjectInputStream inputStream) {
+        output = outputStream;
+        input = inputStream;
     }
 }
