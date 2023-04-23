@@ -79,8 +79,6 @@ public class Queen extends Chessman {
     @Override
     public List<Position> getPossiblePositions() throws WrongTurnException {
         List<Position> positions = new ArrayList<>();
-
-        // Check all possible positions in diagonal directions
         for (int i = 1; i <= 7; i++) {
             if (x + i <= 7 && y + i <= 7 && isDirectionPossible(y + i, x + i)) {
                 positions.add(new Position(x, y, x + i, y + i));
@@ -95,8 +93,6 @@ public class Queen extends Chessman {
                 positions.add(new Position(x, y, x - i, y - i));
             }
         }
-
-        // Check all possible positions in horizontal and vertical directions
         for (int i = 1; i <= 7; i++) {
             if (x + i <= 7 && isDirectionPossible(y, x + i)) {
                 positions.add(new Position(x, y, x + i, y));
