@@ -1,4 +1,4 @@
 # ConsoleChess
-First itteration of educational project
+Education client-server chess written using low-level tech.
 
-It just chess in console. Where turns inputs in coordinates and after each turn desc draws in console.
+Main idea is that write chess on very low level. Cient-Server architecture here done using TCP/IP, with sockets. 
